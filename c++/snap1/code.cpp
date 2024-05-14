@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
 #include <fcntl.h>
 #include <unistd.h>
 #include <termios.h>
@@ -10,7 +10,7 @@ int main() {
     // Open the serial port (UART)
     uart0_filestream = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY);
     if (uart0_filestream == -1) {
-        printf("Error - Unable to open UART.\n");
+        std::cerr << "Error - Unable to open UART." << std::endl;
         return 1;
     }
 
@@ -25,31 +25,27 @@ int main() {
     tcsetattr(uart0_filestream, TCSANOW, &options);
 
     // Read from the serial port continuously
-    while (1) {
+    while (true) {
         unsigned char rx_buffer[256];
-        int rx_length = read(uart0_filestream, (void*)rx_buffer, sizeof(rx_buffer));
+        int rx_length = read(uart0_filestream, rx_buffer, sizeof(rx_buffer));
         if (rx_length < 0) {
-            printf("Error - Reading from UART.\n");
+            std::cerr << "Error - Reading from UART." << std::endl;
             break; // Exit the loop on error
         } else if (rx_length == 0) {
             usleep(500000); // Sleep for 500 ms (adjust as needed)
         } else {
             // Convert bytes to string
-            char lux_str[rx_length + 1];
-            for (int i = 0; i < rx_length; i++) {
-                lux_str[i] = rx_buffer[i];
-            }
-            lux_str[rx_length] = '\0';
+            std::string lux_str(reinterpret_cast<char*>(rx_buffer), rx_length);
 
             // Convert string to float
-            float heartRate = atof(lux_str);
+            float heartRate = std::stof(lux_str);
             heartRate -= 120;
             if (heartRate <= 50) {
                 heartRate = 0;
             }
 
             // Print heart rate value
-            printf("BPM value: %.2f\n", heartRate);
+            std::cout << "BPM value: " << heartRate << std::endl;
         }
     }
 

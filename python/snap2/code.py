@@ -17,10 +17,10 @@ while True:
         if(heartRate <= 50 ) :
           heartRate = 0
         
-        print('Lux value:', heartRate)
+        print('BPM value:', heartRate)
          
         
     except ValueError:
-        print('Invalid lux value:', lux_str)
+        print('Invalid BPM value:', lux_str)
 
 time.sleep(0.5)
