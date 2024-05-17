@@ -1,5 +1,8 @@
 import serial
 import time
+import drivers
+ 
+display = drivers.Lcd()
 
 
 ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600,
@@ -13,14 +16,30 @@ while True:
     lux_str = lux_bytes.decode('utf-8').strip()  # Convert bytes to string
     try:
         heartRate = float(lux_str)  # Convert string to float
-        heartRate = heartRate - 120 ;
+        
+        heartRate = heartRate - 125 ;
         if(heartRate <= 50 ) :
           heartRate = 0
         
         print('BPM value:', heartRate)
+        display.lcd_clear()  # Clear the LCD
+        res = "BPM value: {}".format(heartRate)
+        display.lcd_display_string(res, 1)  # Display new content
+        
+           
          
         
     except ValueError:
         print('Invalid BPM value:', lux_str)
 
 time.sleep(0.5)
+
+
+
+ 
+
+
+ 
+  
+     
+         

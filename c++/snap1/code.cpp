@@ -1,10 +1,22 @@
 #include <iostream>
-#include <cstdlib>
+#include <fstream>
 #include <fcntl.h>
 #include <unistd.h>
 #include <termios.h>
+#include "i2c1602.h"
+#include <wiringPi.h>
+#include <wiringPiI2C.h>
+#include <cstring> // For string manipulation
+#include <cstdio>  // For sprintf
+
+#define LCD_ADDR 0x27
 
 int main() {
+    wiringPiSetup();
+    I2C16x2 lcd;
+    lcd_init(LCD_ADDR);
+    ClrLcd();
+
     int uart0_filestream = -1;
 
     // Open the serial port (UART)
@@ -30,7 +42,7 @@ int main() {
         int rx_length = read(uart0_filestream, rx_buffer, sizeof(rx_buffer));
         if (rx_length < 0) {
             std::cerr << "Error - Reading from UART." << std::endl;
-            break; // Exit the loop on error
+            break;
         } else if (rx_length == 0) {
             usleep(500000); // Sleep for 500 ms (adjust as needed)
         } else {
@@ -46,6 +58,12 @@ int main() {
 
             // Print heart rate value
             std::cout << "BPM value: " << heartRate << std::endl;
+            
+            // Convert float to string
+            char heartRateStr[60];
+            ClrLcd();
+            sprintf(heartRateStr, "BPM value: %.2f", heartRate);
+            typeString(heartRateStr); // Display on LCD
         }
     }
 
