@@ -17,17 +17,12 @@ while True:
     try:
         heartRate = float(lux_str)  # Convert string to float
         
-        heartRate = heartRate - 125 ;
-        if(heartRate <= 50 ) :
-          heartRate = 0
-        
         print('BPM value:', heartRate)
         display.lcd_clear()  # Clear the LCD
         res = "BPM value: {}".format(heartRate)
         display.lcd_display_string(res, 1)  # Display new content
         
-           
-         
+                
         
     except ValueError:
         print('Invalid BPM value:', lux_str)

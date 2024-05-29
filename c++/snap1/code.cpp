@@ -12,10 +12,10 @@
 #define LCD_ADDR 0x27
 
 int main() {
-    wiringPiSetup();
-    I2C16x2 lcd;
-    lcd_init(LCD_ADDR);
-    ClrLcd();
+    // wiringPiSetup();
+    // I2C16x2 lcd;
+    // lcd_init(LCD_ADDR);
+    // ClrLcd();
 
     int uart0_filestream = -1;
 
@@ -51,19 +51,19 @@ int main() {
 
             // Convert string to float
             float heartRate = std::stof(lux_str);
-            heartRate -= 120;
-            if (heartRate <= 50) {
-                heartRate = 0;
-            }
+            // heartRate -= 120;
+            // if (heartRate <= 50) {
+            //     heartRate = 0;
+            // }
 
             // Print heart rate value
             std::cout << "BPM value: " << heartRate << std::endl;
             
             // Convert float to string
             char heartRateStr[60];
-            ClrLcd();
-            sprintf(heartRateStr, "BPM value: %.2f", heartRate);
-            typeString(heartRateStr); // Display on LCD
+            // ClrLcd();
+            // sprintf(heartRateStr, "BPM value: %.2f", heartRate);
+            // typeString(heartRateStr); // Display on LCD
         }
     }
 

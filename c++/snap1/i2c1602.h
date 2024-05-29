@@ -4,7 +4,6 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-
 // Define some device constants
 // Control bits: There are 4 control bits
 // From right to left: Register Select (RS) bit, Read/Write (RW) bit, Enable (EN) bit, Backlight ON/OFF bit.

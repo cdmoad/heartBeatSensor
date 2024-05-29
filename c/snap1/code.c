@@ -58,10 +58,10 @@ int main() {
 
             // Convert string to float
             float heartRate = atof(lux_str);
-            heartRate -= 120;
-            if (heartRate <= 50) {
-                heartRate = 0;
-            }
+            // heartRate -= 120;
+            // if (heartRate <= 50) {
+            //     heartRate = 0;
+            // }
 
             // Print heart rate value
             printf("BPM value: %.2f\n", heartRate);
